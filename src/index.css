@@ -1,0 +1,257 @@
+/* ============================================================
+   Star India Travel – Elegant High-Contrast Serif + Geometric
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   CSS Custom Properties – Theme Tokens
+   ============================================================ */
+:root {
+  --radius: 0.5rem;
+
+  /* Brand Colors */
+  --color-navy: #0B1929;
+  --color-navy-deep: #060F1D;
+  --color-navy-light: #122640;
+  --color-gold: #C9A84C;
+  --color-gold-light: #E8D5A0;
+  --color-gold-dark: #A68A3A;
+  --color-cream: #FAF7F2;
+  --color-warm-white: #FFFDF9;
+  --color-sky: #87CEEB;
+  --color-sky-light: #E8F4F8;
+  --color-sand: #F5EDE0;
+
+  /* shadcn/ui theme variables */
+  --background: var(--color-warm-white);
+  --foreground: var(--color-navy);
+  --card: #FFFFFF;
+  --card-foreground: var(--color-navy);
+  --popover: #FFFFFF;
+  --popover-foreground: var(--color-navy);
+  --primary: var(--color-navy);
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--color-cream);
+  --secondary-foreground: var(--color-navy);
+  --muted: #F1F0EC;
+  --muted-foreground: #6B7280;
+  --accent: var(--color-gold);
+  --accent-foreground: var(--color-navy);
+  --destructive: #DC2626;
+  --border: #E5E2DA;
+  --input: #E5E2DA;
+  --ring: var(--color-gold);
+  --chart-1: var(--color-gold);
+  --chart-2: var(--color-sky);
+  --chart-3: #7B9E87;
+  --chart-4: #D4A574;
+  --chart-5: var(--color-navy);
+  --sidebar: var(--color-navy);
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: var(--color-gold);
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: var(--color-navy-light);
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: rgba(255,255,255,0.1);
+  --sidebar-ring: var(--color-gold);
+}
+
+/* ============================================================
+   Tailwind Theme Inline – Design Tokens
+   ============================================================ */
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-navy: #0B1929;
+  --color-navy-deep: #060F1D;
+  --color-navy-light: #122640;
+  --color-gold: #C9A84C;
+  --color-gold-light: #E8D5A0;
+  --color-gold-dark: #A68A3A;
+  --color-cream: #FAF7F2;
+  --color-warm-white: #FFFDF9;
+  --color-sky: #87CEEB;
+  --color-sky-light: #E8F4F8;
+  --color-sand: #F5EDE0;
+
+  /* Typography */
+  --font-serif: 'Playfair Display', 'Georgia', serif;
+  --font-sans: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+
+  /* Animations */
+  --animate-fade-up: fade-up 0.6s ease-out both;
+  --animate-fade-in: fade-in 0.5s ease-out both;
+  --animate-slide-up: slide-up 0.5s ease-out both;
+  --animate-slide-down: slide-down 0.3s ease-out both;
+  --animate-scale-in: scale-in 0.4s ease-out both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* ============================================================
+   Utility Classes
+   ============================================================ */
+@layer utilities {
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .gradient-navy {
+    background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 100%);
+  }
+  .gradient-gold {
+    background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  }
+  .gradient-overlay {
+    background: linear-gradient(180deg, rgba(11,25,41,0) 0%, rgba(11,25,41,0.85) 100%);
+  }
+  .gradient-overlay-strong {
+    background: linear-gradient(180deg, rgba(11,25,41,0.1) 0%, rgba(11,25,41,0.9) 100%);
+  }
+  .gold-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .gold-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 48px;
+    height: 3px;
+    background: var(--color-gold);
+    border-radius: 2px;
+  }
+  .section-padding {
+    @apply px-4 py-16 sm:px-6 lg:px-8;
+  }
+  .container-narrow {
+    @apply mx-auto max-w-6xl;
+  }
+  .container-wide {
+    @apply mx-auto max-w-7xl;
+  }
+}
+
+/* ============================================================
+   Scroll Reveal (driven by IntersectionObserver)
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Selection Color
+   ============================================================ */
+::selection {
+  background: var(--color-gold);
+  color: var(--color-navy);
+}
+
+/* ============================================================
+   Scrollbar (subtle)
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-navy-light);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-navy);
+}
