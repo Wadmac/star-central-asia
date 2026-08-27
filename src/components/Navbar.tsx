@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, MapPin, Phone, MessageCircle } from "lucide-react";
+import { Menu, Phone, MessageCircle } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import logo from "@/assets/logo.svg";
 

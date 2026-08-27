@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { MapPin, Phone, Mail, Clock, MessageCircle, ExternalLink } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, MessageCircle } from "lucide-react";
 import logo from "@/assets/logo.svg";
 
 const quickLinks = [

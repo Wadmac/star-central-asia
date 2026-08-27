@@ -3,15 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router";
 import {
-  MapPin,
-  Users,
   Award,
   Heart,
   Shield,
   Globe,
   Star,
   Phone,
-  MessageCircle,
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";

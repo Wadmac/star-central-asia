@@ -1,21 +1,17 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  MapPin,
   Clock,
   Users,
   Star,
-  Calendar,
   Check,
-  ChevronRight,
   Phone,
   MessageCircle,
   ArrowLeft,
@@ -25,8 +21,29 @@ import {
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
+interface TourData {
+  id: string;
+  title: string;
+  slug: string;
+  country: string;
+  duration: string;
+  groupSize: string;
+  price: number;
+  originalPrice?: number;
+  rating: number;
+  reviews: number;
+  image: string;
+  highlights: string[];
+  category: string;
+  description: string;
+  inclusions: string[];
+  exclusions: string[];
+  itinerary: { day: number; title: string; description: string }[];
+  faqs: { question: string; answer: string }[];
+}
+
 // Sample tour data (in production, this would come from API/database)
-const toursData: Record<string, any> = {
+const toursData: Record<string, TourData> = {
   "silk-road-splendor": {
     id: "1",
     title: "Silk Road Splendor",
@@ -266,7 +283,7 @@ export default function TourDetail() {
                 <TabsContent value="itinerary" className="mt-6">
                   <h2 className="font-serif text-2xl font-bold mb-6">Day-by-Day Itinerary</h2>
                   <div className="space-y-4">
-                    {tour.itinerary.map((day: any) => (
+                    {tour.itinerary.map((day) => (
                       <Card key={day.day}>
                         <CardContent className="p-5">
                           <div className="flex items-start gap-4">
@@ -314,7 +331,7 @@ export default function TourDetail() {
                 <TabsContent value="faqs" className="mt-6">
                   <h2 className="font-serif text-2xl font-bold mb-6">Frequently Asked Questions</h2>
                   <div className="space-y-4">
-                    {tour.faqs.map((faq: any, index: number) => (
+                    {tour.faqs.map((faq, index) => (
                       <Card key={index}>
                         <CardContent className="p-5">
                           <h4 className="font-semibold mb-2">{faq.question}</h4>

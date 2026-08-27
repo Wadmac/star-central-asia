@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/use-auth";
-import { LayoutDashboard, LogOut, MapPin, Calendar, Package, MessageCircle } from "lucide-react";
+import { LogOut, MapPin, Calendar, Package, MessageCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { Navbar } from "@/components/Navbar";
 
