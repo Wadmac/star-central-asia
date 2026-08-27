@@ -77,7 +77,15 @@ class RootErrorBoundary extends React.Component<
   }
 }
 
-const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
+const convexUrl = import.meta.env.VITE_CONVEX_URL;
+if (!convexUrl) {
+  console.error(
+    "[Star Central Asia] Missing VITE_CONVEX_URL environment variable. " +
+    "The app requires a Convex deployment URL to function. " +
+    "Set VITE_CONVEX_URL in your deployment environment (e.g. Vercel → Project Settings → Environment Variables).",
+  );
+}
+const convex = new ConvexReactClient(convexUrl || "https://placeholder.convex.cloud");
 
 function RouteSyncer() {
   const location = useLocation();
