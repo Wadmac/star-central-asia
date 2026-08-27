@@ -126,9 +126,12 @@ export const createBooking = mutation({
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-    
+    const userId = identity
+      ? (await ctx.db.query("users").filter((q) => q.eq("email", identity.email)).first())?._id
+      : undefined;
+
     const bookingId = await ctx.db.insert("bookings", {
-      userId: identity ? (await ctx.db.query("users").filter(q => q.eq("email", identity.email)).first())?._id : undefined,
+      userId,
       tourId: args.tourId,
       tourTitle: args.tourTitle,
       tourSlug: args.tourSlug,
@@ -189,9 +192,12 @@ export const sendMessage = mutation({
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-    
+    const userId = identity
+      ? (await ctx.db.query("users").filter((q) => q.eq("email", identity.email)).first())?._id
+      : undefined;
+
     const messageId = await ctx.db.insert("messages", {
-      userId: identity ? (await ctx.db.query("users").filter(q => q.eq("email", identity.email)).first())?._id : undefined,
+      userId,
       name: args.name,
       email: args.email,
       phone: args.phone,
@@ -224,9 +230,12 @@ export const submitQuote = mutation({
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-    
+    const userId = identity
+      ? (await ctx.db.query("users").filter((q) => q.eq("email", identity.email)).first())?._id
+      : undefined;
+
     const quoteId = await ctx.db.insert("quoteRequests", {
-      userId: identity ? (await ctx.db.query("users").filter(q => q.eq("email", identity.email)).first())?._id : undefined,
+      userId,
       name: args.name,
       email: args.email,
       phone: args.phone,

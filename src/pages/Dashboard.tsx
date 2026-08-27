@@ -1,5 +1,6 @@
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import type { Doc } from "@/convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -188,7 +189,7 @@ function UserBookings() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {bookings.map((booking) => (
+          {bookings.map((booking: Doc<"bookings">) => (
             <div key={booking._id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
               <div className="flex items-center gap-4">
                 {getStatusIcon(booking.status)}
