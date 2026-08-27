@@ -1,7 +1,10 @@
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/use-auth";
-import { LogOut, MapPin, Calendar, Package, MessageCircle } from "lucide-react";
+import { LogOut, MapPin, Calendar, Package, MessageCircle, Clock, CheckCircle, XCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { Navbar } from "@/components/Navbar";
 
@@ -108,19 +111,105 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Recent Activity / Placeholder */}
-          <Card className="border-border/70 shadow-none">
-            <CardHeader>
-              <CardTitle className="font-serif text-lg">Your Travel Activity</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Your booking history, saved tours, and travel documents will appear here. Start exploring our tours to begin your Central Asian adventure!
-              </p>
-            </CardContent>
-          </Card>
+          {/* User Bookings */}
+          <UserBookings />
         </div>
       </main>
     </div>
+  );
+}
+
+function UserBookings() {
+  const bookings = useQuery(api.tours.getUserBookings);
+
+  if (bookings === undefined) {
+    return (
+      <Card className="border-border/70 shadow-none">
+        <CardHeader>
+          <CardTitle className="font-serif text-lg">Your Bookings</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">Loading...</p>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (bookings.length === 0) {
+    return (
+      <Card className="border-border/70 shadow-none">
+        <CardHeader>
+          <CardTitle className="font-serif text-lg">Your Bookings</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground mb-4">
+            You haven't booked any tours yet. Start exploring our curated collection of Central Asian tours!
+          </p>
+          <Button asChild>
+            <Link to="/tours">Browse Tours</Link>
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case "confirmed":
+      case "paid":
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
+      case "completed":
+        return <CheckCircle className="h-4 w-4 text-blue-500" />;
+      case "cancelled":
+        return <XCircle className="h-4 w-4 text-red-500" />;
+      default:
+        return <Clock className="h-4 w-4 text-yellow-500" />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "confirmed":
+      case "paid":
+        return "bg-green-100 text-green-800";
+      case "completed":
+        return "bg-blue-100 text-blue-800";
+      case "cancelled":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-yellow-100 text-yellow-800";
+    }
+  };
+
+  return (
+    <Card className="border-border/70 shadow-none">
+      <CardHeader>
+        <CardTitle className="font-serif text-lg">Your Bookings</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {bookings.map((booking) => (
+            <div key={booking._id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+              <div className="flex items-center gap-4">
+                {getStatusIcon(booking.status)}
+                <div>
+                  <Link to={`/tours/${booking.tourSlug}`} className="font-semibold hover:text-gold transition-colors">
+                    {booking.tourTitle}
+                  </Link>
+                  <p className="text-sm text-muted-foreground">
+                    {booking.startDate} · {booking.travelers} traveler{booking.travelers > 1 ? 's' : ''}
+                  </p>
+                </div>
+              </div>
+              <div className="text-right">
+                <Badge className={getStatusColor(booking.status)}>
+                  {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
+                </Badge>
+                <p className="text-sm font-semibold mt-1">${booking.totalAmount}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </CardContent>    </Card>
   );
 }

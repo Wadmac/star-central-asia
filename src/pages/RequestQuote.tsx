@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -80,13 +82,36 @@ export default function RequestQuote() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const submitQuote = useMutation(api.tours.submitQuote);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    alert("Thank you for your request! Our travel experts will contact you within 24 hours with a personalized quote.");
-    setIsSubmitting(false);
+    try {
+      await submitQuote({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        destination: formData.destination,
+        tripType: formData.tripType || undefined,
+        travelers: parseInt(formData.travelers) || 1,
+        startDate: formData.startDate,
+        duration: formData.duration || undefined,
+        budget: formData.budget || undefined,
+        accommodation: formData.accommodation || undefined,
+        specialRequirements: formData.specialRequirements || undefined,
+      });
+      alert("Thank you for your request! Our travel experts will contact you within 24 hours with a personalized quote.");
+      setFormData({
+        name: "", email: "", phone: "", destination: "", tripType: "",
+        travelers: "", startDate: "", duration: "", budget: "",
+        accommodation: "", specialRequirements: "", newsletter: false,
+      });
+    } catch (error) {
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

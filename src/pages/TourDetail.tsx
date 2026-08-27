@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAuth } from "@/hooks/use-auth";
 import {
   Clock,
   Users,
@@ -17,9 +20,11 @@ import {
   ArrowLeft,
   Share2,
   Heart,
+  Send,
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { motion } from "framer-motion";
 
 interface TourData {
   id: string;
@@ -255,11 +260,11 @@ export default function TourDetail() {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="w-full justify-start">
+              <Tabs defaultValue="overview" className="w-full">                  <TabsList className="w-full justify-start">
                   <TabsTrigger value="overview">Overview</TabsTrigger>
                   <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
                   <TabsTrigger value="inclusions">Inclusions</TabsTrigger>
+                  <TabsTrigger value="reviews">Reviews</TabsTrigger>
                   <TabsTrigger value="faqs">FAQs</TabsTrigger>
                 </TabsList>
 
@@ -325,6 +330,42 @@ export default function TourDetail() {
                         ))}
                       </ul>
                     </div>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="reviews" className="mt-6">
+                  <h2 className="font-serif text-2xl font-bold mb-6">Guest Reviews</h2>
+                  <div className="space-y-4">
+                    {/* Sample reviews for display */}
+                    {[
+                      { id: 1, name: "Sarah M.", rating: 5, date: "March 2025", comment: "An absolutely incredible journey! Our guide was knowledgeable and the itinerary was perfect. The Silk Road cities were breathtaking." },
+                      { id: 2, name: "James K.", rating: 5, date: "February 2025", comment: "Professional service from start to finish. The hotels were excellent and every detail was taken care of. Highly recommend!" },
+                      { id: 3, name: "Priya S.", rating: 4, date: "January 2025", comment: "Great tour overall. The cultural experiences were authentic and unique. Would definitely book with Star Central Asia again." },
+                    ].map((review) => (
+                      <Card key={review.id}>
+                        <CardContent className="p-5">
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="font-semibold">{review.name}</span>
+                                <div className="flex">
+                                  {Array.from({ length: 5 }).map((_, i) => (
+                                    <Star key={i} className={`h-4 w-4 ${i < review.rating ? 'fill-gold text-gold' : 'text-gray-300'}`} />
+                                  ))}
+                                </div>
+                              </div>
+                              <p className="text-xs text-muted-foreground">{review.date}</p>
+                            </div>
+                          </div>
+                          <p className="mt-3 text-sm text-muted-foreground">{review.comment}</p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                  <div className="mt-6 p-4 bg-muted/50 rounded-lg">
+                    <p className="text-sm text-muted-foreground text-center">
+                      Have you traveled with us? <Link to="/contact" className="text-gold hover:underline font-medium">Share your experience</Link>
+                    </p>
                   </div>
                 </TabsContent>
 
